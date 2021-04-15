@@ -27,7 +27,7 @@
         <main.user.dir>../</main.user.dir>
 
         <!-- Dependencies about -->
-        <mysql.connector.version>5.1.35</mysql.connector.version>
+        <mysql.connector.version>8.0.16</mysql.connector.version>
         <druid.version>1.1.9</druid.version>
         <sofaark.version>0.6.0</sofaark.version>
         <dashboard.client.version>1.1.0-SNAPSHOT</dashboard.client.version>
