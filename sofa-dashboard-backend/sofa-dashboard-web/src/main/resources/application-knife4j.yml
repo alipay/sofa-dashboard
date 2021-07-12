@@ -1,0 +1,9 @@
+knife4j:
+  enable: true
+
+
+#  开启验证
+#  basic:
+#    password: 123456
+#    username: root
+#    enable: true

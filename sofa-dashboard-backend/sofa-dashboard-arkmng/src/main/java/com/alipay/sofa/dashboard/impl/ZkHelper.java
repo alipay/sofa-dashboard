@@ -104,6 +104,29 @@ public class ZkHelper {
     }
 
     /**
+     * 获取 /sofa-ark 下面所有的应用
+     * @return
+     */
+    public List<String> getArkAppList() {
+        List<String> result = null;
+        CuratorFramework curatorClient = zkCommandClient.getCuratorClient();
+        String arkAppBasePath = SofaDashboardConstants.SOFA_ARK_ROOT;
+        try {
+            if (checkExist(arkAppBasePath, curatorClient)) {
+                // 获取所有应用信息
+                result = curatorClient.getChildren().forPath(arkAppBasePath);
+            }
+        } catch (Exception e) {
+            LOGGER.error("Failed to get ark app list.", e);
+        } finally {
+            if (result == null) {
+                result = new ArrayList<>();
+            }
+        }
+        return result;
+    }
+
+    /**
      * 获取当前应用实例的个数
      *
      * @return

@@ -1,0 +1,22 @@
+version: '3.8'
+services:
+  jenkins:
+
+    image: jenkins/jenkins:lts
+    volumes:
+#      - ./Jenkins/jenkins_mount/jenkins/:/var/jenkins_mount/
+      - ./Jenkins/data/jenkins/:/var/jenkins_home
+      - ./Jenkins/run/docker.sock:/var/run/docker.sock
+      - ./Jenkins/bin/docker:/usr/bin/docker
+      - ./Jenkins/lib/x86_64-linux-gnu/libltdl.so.7:/usr/lib/x86_64-linux-gnu/libltdl.so.7
+    ports:
+      - "4396:8080"
+    expose:
+      - "4396"
+
+    privileged: true
+    user: root
+    restart: always
+    container_name: jenkins
+    environment:
+      JAVA_OPTS: '-Djava.util.logging.config.file=/var/jenkins_home/log.properties'

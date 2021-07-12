@@ -39,3 +39,6 @@ functions/mock
 screenshot
 .firebase
 application-localhost.properties
+/sofa-dashboard-backend/sofa-dashboard-web/docker/sofadashboard/sofa-dashboard-web-1.0.0-SNAPSHOT.jar
+/sofa-dashboard-backend/sofa-dashboard-web/docker/jenkins/Jenkins/
+/sofa-dashboard-backend/sofa-dashboard-web/docker/sofadashboard/SOFADashboard/

@@ -1,0 +1,52 @@
+version: '3.8'
+services:
+  sofadashboard:
+    build: .
+    image: sofadashboard
+    depends_on:
+      - mysql
+      - zk01
+    ports:
+      - "8099:8099"
+    links:
+      - zk01
+      - mysql
+
+  mysql:
+    container_name: mysql57
+    image: mysql:5.7.31
+    restart: always
+    ports:
+      - "3306:3306"
+    privileged: true
+    volumes:
+      - ./SOFADashboard/mysql57/log:/var/log/mysql
+#      - /dockerImages/DockerFileSharing/home/SOFADashboard/mysql57/conf/my.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf
+      - ./SOFADashboard/mysql57/data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: "123456"
+      MYSQL_USER: 'root'
+      MYSQL_PASS: '123456'
+    command: [
+        '--character-set-server=utf8mb4',
+        '--collation-server=utf8mb4_general_ci',
+        '--max_connections=3000'
+    ]
+
+  zk01:
+    image: zookeeper:3.4.11
+    restart: always
+    hostname: zk01
+    container_name: zk01
+    ports:
+      - "2181:2181"
+    volumes:
+      - ./SOFADashboard/zookeeper/zk01/data:/data
+      - ./SOFADashboard/zookeeper/zk01/datalog:/datalog
+      - ./SOFADashboard/zookeeper/zk01/logs:/logs
+
+
+networks:
+  default:
+    external:
+      name: my_network

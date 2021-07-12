@@ -95,6 +95,9 @@
 		select * from ark_module_version where module_id=#{moduleId} and module_version=#{moduleVersion}
 	</select>
 
+	<select id="queryRelationByModuleIdAndAppName" resultType="com.alipay.sofa.dashboard.model.AppArkDO">
+		select * from  ark_module_app where app_name=#{appName} and module_id=#{mId}
+	</select>
 
 	<update id="update" parameterType="com.alipay.sofa.dashboard.model.ArkPluginDO">
 		update ark_module_info set plugin_name = #{pluginName}, description = #{description} where id=#{id}

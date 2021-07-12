@@ -28,6 +28,14 @@ import java.util.List;
  **/
 public interface ArkMngService {
 
+    /***
+     * 根据模块Id和应用名字 获取模块是否已关联该应用
+     * @param mId
+     * @param appName
+     * @return
+     */
+    boolean isRelatedByModuleAndApp(int mId, String appName);
+
     /**
      * 获取当前所有注册的 plugin 信息
      *
@@ -83,9 +91,8 @@ public interface ArkMngService {
      */
     List<ArkPluginModel> fetchPluginsByName(String pluginName);
 
-    /**
+    /***
      * 关联应用和插件
-     *
      * @param moduleId
      * @param appName
      * @return

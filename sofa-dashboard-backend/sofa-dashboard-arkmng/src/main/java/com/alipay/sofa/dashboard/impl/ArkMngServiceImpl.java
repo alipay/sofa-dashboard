@@ -16,12 +16,10 @@
  */
 package com.alipay.sofa.dashboard.impl;
 
+import com.alipay.sofa.ark.spi.service.ArkService;
+import com.alipay.sofa.dashboard.app.AppServiceImpl;
 import com.alipay.sofa.dashboard.dao.ArkDao;
-import com.alipay.sofa.dashboard.model.AppArkDO;
-import com.alipay.sofa.dashboard.model.ArkModuleUserDO;
-import com.alipay.sofa.dashboard.model.ArkModuleVersionDO;
-import com.alipay.sofa.dashboard.model.ArkPluginDO;
-import com.alipay.sofa.dashboard.model.ArkPluginModel;
+import com.alipay.sofa.dashboard.model.*;
 import com.alipay.sofa.dashboard.service.ArkMngService;
 import com.alipay.sofa.dashboard.utils.SofaDashboardUtil;
 import org.slf4j.Logger;
@@ -29,6 +27,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +45,13 @@ public class ArkMngServiceImpl implements ArkMngService {
 
     @Autowired
     private ArkDao              arkDao;
+    @Autowired
+    private ZkHelper            zkHelper;
+
+    @Override
+    public boolean isRelatedByModuleAndApp(int mId, String appName) {
+        return arkDao.queryRelationByModuleIdAndAppName(mId, appName).size() > 0;
+    }
 
     @Override
     public List<ArkPluginModel> fetchRegisteredPlugins() {
@@ -121,12 +127,20 @@ public class ArkMngServiceImpl implements ArkMngService {
         if (moduleId < 0) {
             return -1;
         }
-        AppArkDO appArkDO = new AppArkDO();
-        appArkDO.setAppName(appName);
-        appArkDO.setCreateTime(SofaDashboardUtil.now());
-        appArkDO.setModuleId(moduleId);
-        arkDao.insertAppArk(appArkDO);
-        return appArkDO.getId();
+        List<String> arkAppList = zkHelper.getArkAppList();
+        boolean relatedByModuleAndApp = isRelatedByModuleAndApp(moduleId, appName);
+        for (String appApp : arkAppList) {
+            //zk中已存在应用 并且 未关联
+            if (appApp.equals(appName) && isRelatedByModuleAndApp(moduleId, appName) == false) {
+                AppArkDO appArkDO = new AppArkDO();
+                appArkDO.setAppName(appName);
+                appArkDO.setCreateTime(SofaDashboardUtil.now());
+                appArkDO.setModuleId(moduleId);
+                arkDao.insertAppArk(appArkDO);
+                return appArkDO.getId();
+            }
+        }
+        return -1;
     }
 
     @Override

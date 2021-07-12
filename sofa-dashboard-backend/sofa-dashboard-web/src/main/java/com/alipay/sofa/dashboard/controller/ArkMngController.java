@@ -25,6 +25,9 @@ import com.alipay.sofa.dashboard.model.ArkPluginModel;
 import com.alipay.sofa.dashboard.response.ResponseEntity;
 import com.alipay.sofa.dashboard.service.ArkMngService;
 import com.alipay.sofa.dashboard.utils.SofaDashboardUtil;
+import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +45,7 @@ import java.util.Map;
  * @author: guolei.sgl (guolei.sgl@antfin.com) 18/12/19 上午11:06
  * @since:
  **/
+@Api(value = SofaDashboardConstants.API_ARK_TAGS, tags = SofaDashboardConstants.API_ARK_TAGS)
 @RestController
 @RequestMapping("/api/ark")
 public class ArkMngController {
@@ -59,6 +63,8 @@ public class ArkMngController {
      *
      * @return
      */
+    @ApiOperation(value = "查询全部插件",tags = SofaDashboardConstants.API_ARK_TAGS)
+    @ApiOperationSupport(order = 1)
     @RequestMapping("/plugin-list")
     public List<ArkPluginModel> queryArkPluginList() {
         List<ArkPluginModel> list = arkMngService.fetchRegisteredPlugins();
@@ -87,6 +93,8 @@ public class ArkMngController {
      * @param map
      * @return
      */
+    @ApiOperation(value = "注册插件", tags = SofaDashboardConstants.API_ARK_TAGS)
+    @ApiOperationSupport(order = 2)
     @RequestMapping("/register")
     public boolean registerPlugin(@RequestBody Map<String, String> map) {
         if (map == null) {
@@ -98,6 +106,8 @@ public class ArkMngController {
         return arkMngService.registerPlugin(arkPluginDO);
     }
 
+    @ApiOperation(value = "更新插件", tags = SofaDashboardConstants.API_ARK_TAGS)
+    @ApiOperationSupport(order = 3)
     @RequestMapping("/update-plugin")
     public boolean updatePlugin(@RequestBody ArkPluginDO arkPluginDO) {
         if (arkPluginDO == null) {
@@ -106,6 +116,8 @@ public class ArkMngController {
         return arkMngService.updatePlugin(arkPluginDO);
     }
 
+    @ApiOperation(value = "更新插件版本", tags = SofaDashboardConstants.API_ARK_TAGS)
+    @ApiOperationSupport(order = 4)
     @RequestMapping("/register-new-version")
     public boolean registerNewVersion(@RequestBody Map<String, String> map) {
         if (map == null) {
@@ -121,6 +133,8 @@ public class ArkMngController {
         return arkMngService.addNewVersion(Integer.valueOf(id), version, address);
     }
 
+    @ApiOperation(value = "删除插件版本", tags = SofaDashboardConstants.API_ARK_TAGS)
+    @ApiOperationSupport(order = 8)
     @RequestMapping("/delete-version")
     public ResponseEntity<Boolean> deleteVersion(@RequestParam("id") int id,
                                                  @RequestParam("version") String version) {
@@ -137,6 +151,8 @@ public class ArkMngController {
         return result;
     }
 
+    @ApiOperation(value = "删除插件", tags = SofaDashboardConstants.API_ARK_TAGS)
+    @ApiOperationSupport(order = 9)
     @RequestMapping("/delete-plugin")
     public boolean deletePluginModel(@RequestParam("id") int id) {
         if (id < 0) {
@@ -145,6 +161,8 @@ public class ArkMngController {
         return arkMngService.removePlugins(id);
     }
 
+    @ApiOperation(value = "查询插件", tags = SofaDashboardConstants.API_ARK_TAGS)
+    @ApiOperationSupport(order = 7)
     @RequestMapping("/search-plugin")
     public List<ArkPluginModel> searchPlugins(@RequestParam("pluginName") String pluginName) {
         if (StringUtils.isEmpty(pluginName)) {
@@ -154,11 +172,15 @@ public class ArkMngController {
         return arkMngService.fetchPluginsByName(pluginName);
     }
 
+    @ApiOperation(value = "关联应用", tags = SofaDashboardConstants.API_ARK_TAGS)
+    @ApiOperationSupport(order = 5)
     @RequestMapping("/related-app")
     public boolean relatedApp(@RequestParam("id") int id, @RequestParam("appName") String appName) {
         return arkMngService.relatedAppToPlugin(id, appName) > 0;
     }
 
+    @ApiOperation(value = "取消关联应用", tags = SofaDashboardConstants.API_ARK_TAGS)
+    @ApiOperationSupport(order = 6)
     @RequestMapping("/cancel-related-app")
     public boolean cancelRelatedApp(@RequestParam("pluginName") String pluginName,
                                     @RequestParam("appName") String appName) {

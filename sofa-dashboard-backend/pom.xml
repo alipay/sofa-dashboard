@@ -35,10 +35,17 @@
         <sofa.common.version>1.0.17</sofa.common.version>
         <jmockit.version>1.14</jmockit.version>
         <mybatis.spring.boot.version>1.3.2</mybatis.spring.boot.version>
+        <knife4j.version>2.0.7</knife4j.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <!--knife4j-->
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-spring-boot-starter</artifactId>
+                <version>${knife4j.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.alipay.sofa</groupId>
                 <artifactId>sofa-dashboard-core</artifactId>

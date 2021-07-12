@@ -27,6 +27,7 @@ import com.alipay.sofa.dashboard.model.CommandRequest;
 import com.alipay.sofa.dashboard.response.ResponseEntity;
 import com.alipay.sofa.dashboard.service.ArkMngService;
 import com.alipay.sofa.dashboard.spi.CommandPushManager;
+import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,7 @@ import java.util.Map;
  * @author: guolei.sgl (guolei.sgl@antfin.com) 18/12/21 下午2:26
  * @since:
  **/
+
 @RestController
 @RequestMapping("/api/arkapp")
 public class ArkAppMngController {

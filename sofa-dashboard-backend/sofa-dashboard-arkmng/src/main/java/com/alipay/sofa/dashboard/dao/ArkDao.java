@@ -167,4 +167,12 @@ public interface ArkDao {
      * @return
      */
     int deletePluginVersion(@Param("id") int id, @Param("version") String version);
+
+    /***
+     * 根据模块id和应用名字 获取模块-应用关联信息
+     * @param mId
+     * @param appName
+     * @return
+     */
+    List<AppArkDO> queryRelationByModuleIdAndAppName(int mId, String appName);
 }

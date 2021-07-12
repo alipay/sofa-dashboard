@@ -25,30 +25,30 @@ import com.alipay.sofa.dashboard.utils.HostPortUtils;
  */
 public class InstanceRecord extends Application {
 
-	public InstanceRecord() {
-	}
+    public InstanceRecord() {
+    }
 
-	public InstanceRecord(Application other) {
-		setAppName(other.getAppName());
-		setHostName(other.getHostName());
-		setInternalHost(other.getInternalHost());
-		setPort(other.getPort());
-		setAppState(other.getAppState());
-		setStartTime(other.getStartTime());
-		setLastRecover(other.getLastRecover());
-	}
+    public InstanceRecord(Application other) {
+        setAppName(other.getAppName());
+        setHostName(other.getHostName());
+        setInternalHost(other.getInternalHost());
+        setPort(other.getPort());
+        setAppState(other.getAppState());
+        setStartTime(other.getStartTime());
+        setLastRecover(other.getLastRecover());
+    }
 
-	/**
-	 * Id 是接口层概念，用来和前端交换一个短的 host&port 描述
-	 *
-	 * @return 唯一id
-	 */
-	public String getId() {
-		return HostPortUtils.uniqueId(new HostAndPort(getHostName(), getInternalHost(), getPort()));
-	}
+    /**
+     * Id 是接口层概念，用来和前端交换一个短的 host&port 描述
+     *
+     * @return 唯一id
+     */
+    public String getId() {
+        return HostPortUtils.uniqueId(new HostAndPort(getHostName(), getInternalHost(), getPort()));
+    }
 
-	public void setId(String instanceId) {
-		// Do nothing for json serializer
-	}
+    public void setId(String instanceId) {
+        // Do nothing for json serializer
+    }
 
 }
